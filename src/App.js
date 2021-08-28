@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react'
+import {setData, addData, readRealTime, readColloction} from './controllers/DBcontrollerTest'
 import './App.css';
 
+
+
 function App() {
+
+  useEffect(() => {
+    readRealTime()
+
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={() => setData()}>setData</button>
+      <button onClick={() => addData()}>addData</button>
+      <button onClick={() => readColloction()}>readColloction</button>
     </div>
   );
 }
