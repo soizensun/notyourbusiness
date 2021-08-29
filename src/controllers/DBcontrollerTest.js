@@ -19,13 +19,10 @@ export const setData = () => {
         });
 }
 
-export const addData = () => {
+export const addData = (text) => {
     // add() can genarate ID
-    db.collection("news").add({
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    db.collection("testMD").add({
+        note: text
     })
         .then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
@@ -44,7 +41,7 @@ export const readRealTime = () => {
 
 export const readColloction = () => {
     // read all doc in collection
-    db.collection("cities")
+    db.collection("testMD")
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -55,4 +52,20 @@ export const readColloction = () => {
         .catch((error) => {
             console.log("Error getting documents: ", error);
         });
+}
+
+export const getData = () => {
+    var docRef = db.collection("testMD").doc("Bai1BPndMpdwVO5Ktw1y");
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+            return "doc.data()"
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+            return ""
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
 }
