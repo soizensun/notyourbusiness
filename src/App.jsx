@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import Note from "./components/Note";
+import Note from "./components/Notes/Note";
+import NotePreview from "./components/Notes/NotePreview";
 import { addNote, getNotes } from './controllers/DBcontrollerTest'
 import { Center, Container } from "./styledCoponents/MainStyle";
 import {firebase} from "./configs/FirebaseConfig"
@@ -8,40 +9,40 @@ import {firebase} from "./configs/FirebaseConfig"
 function App() {
   const timestamp = firebase.firestore.FieldValue.serverTimestamp();
   const [note, setNote] = useState('')
+  const [noteTitle, setNoteTitle] = useState('')
   const [test, setTest] = useState([])
 
   const get = () => {
-
     getNotes()
       .then((querySnapshot) => {
         const tmpNoteList = []
         querySnapshot.forEach((doc) => {
           let tmp = {
             id: doc.id,
+            title: doc.data().title,
             note: doc.data().note,
             createAt: doc.data().createAt
           }
           tmpNoteList.push(tmp)
         });
-        setTest(tmpNoteList)
+        setTest(tmpNoteList.reverse())
       })
   }
 
   const saveData = () => {
-    addNote(note)
+    addNote(noteTitle, note)
       .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-        setTest([...test, {
+        setTest([{
           id: docRef.id,
           note: note,
           createAt: timestamp
-        }])
+        }, ...test])
       })
       .catch((error) => {
         console.error("Error adding document: ", error);
       });
     setNote("")
-
+    setNoteTitle("")
   }
 
   useEffect(() => {
@@ -52,12 +53,13 @@ function App() {
     <Container>
       <Center>
         {
-          test.map((item) =>
-            <Note md={item.note} />
+          test.map((noteObj) =>
+            <Note noteObj={noteObj} />
           )
         }
         ----------------
-        <Note md={note} />
+        <NotePreview md={note}/>
+        <input value={noteTitle} type="text" onChange={(e) => setNoteTitle(e.target.value)}></input>
         <textarea value={note} type="text-area" name="name" onChange={(e) => setNote(e.target.value)} />
         <button onClick={() => saveData()}>save</button>
       </Center>
