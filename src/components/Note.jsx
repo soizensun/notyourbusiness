@@ -4,6 +4,10 @@ import { NoteCard } from "../styledCoponents/NoteStyle";
 
 export default function Note(props) {
   return (
-    <NoteCard>{renderMD(props.md)}</NoteCard>
+    <>
+      <NoteCard>
+        {renderMD(props.md)}
+      </NoteCard>
+    </>
   );
 }
