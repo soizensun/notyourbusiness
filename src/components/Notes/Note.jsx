@@ -1,29 +1,12 @@
 import React, { useState, useRef } from "react";
 import { renderMD } from "../../controllers/MDcontroller";
 import { NoteCard, ShowMoreBTN } from "../../styledCoponents/NoteStyle";
-import { Button } from "../../styledCoponents/MainStyle";
 import { motion } from "framer-motion";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
 export default function Note(props) {
   const constraintsRef = useRef(null);
   const [isExpandMode, setisExpandMode] = useState(false);
-  const variants = {
-    open: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        y: { stiffness: 1000, velocity: -100 },
-      },
-    },
-    closed: {
-      y: 50,
-      opacity: 0,
-      transition: {
-        y: { stiffness: 1000 },
-      },
-    },
-  };
 
   return (
     <>
@@ -35,18 +18,10 @@ export default function Note(props) {
                 <p>{props.noteObj.title}</p>
                 <p></p>
                 <ShowMoreBTN onClick={() => setisExpandMode(!isExpandMode)}>
-                  {isExpandMode ? (
-                    <MdKeyboardArrowUp />
-                  ) : (
-                    <MdKeyboardArrowDown style={{ marginTop: "3px" }} />
-                  )}
+                  <MdKeyboardArrowUp />
                 </ShowMoreBTN>
               </div>
-              {isExpandMode ? (
-                <div>{renderMD(props.noteObj.note)}</div>
-              ) : (
-                <div></div>
-              )}
+              <div>{renderMD(props.noteObj.note)}</div>
             </NoteCard>
           </motion.li>
         ) : (
@@ -59,18 +34,9 @@ export default function Note(props) {
                   <p>{props.noteObj.title}</p>
                   <p></p>
                   <ShowMoreBTN onClick={() => setisExpandMode(!isExpandMode)}>
-                    {isExpandMode ? (
-                      <MdKeyboardArrowUp />
-                    ) : (
-                      <MdKeyboardArrowDown style={{ marginTop: "3px" }} />
-                    )}
+                    <MdKeyboardArrowDown style={{ marginTop: "3px" }} />
                   </ShowMoreBTN>
                 </div>
-                {isExpandMode ? (
-                  <div>{renderMD(props.noteObj.note)}</div>
-                ) : (
-                  <div></div>
-                )}
               </NoteCard>
             </motion.li>
           </motion.div>
