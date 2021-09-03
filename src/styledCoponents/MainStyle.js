@@ -19,7 +19,7 @@ export const Button = Styled.button`
         text-align: center;
         outline: none;
         color: white;
-        background-color: #EC7063;
+        background-color: #F1948A;
         border: none;
         border-radius: 7px;
         box-shadow: 0 5px #999;
@@ -27,11 +27,11 @@ export const Button = Styled.button`
         cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='55' viewport='0 0 100 100' style='fill:black;font-size:25px;'><text y='50%'>☝🏻</text></svg>"), auto;
     }
     &:hover{
-        background-color: #EC7063;
+        background-color: #F1948A;
         color: white
     }
     &:active{
-        background-color: #EC7063;
+        background-color: #F1948A;
         box-shadow: 0 3px #666;
         transform: translateY(4px);
         color: white
