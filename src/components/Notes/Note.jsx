@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { renderMD } from "../../controllers/MDcontroller";
-import { NoteCard, ShowMoreBTN } from "../../styledCoponents/NoteStyle";
+import { NoteCard, ShowMoreBTN, Title } from "../../styledCoponents/NoteStyle";
 import { motion } from "framer-motion";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
@@ -9,18 +9,17 @@ export default function Note(props) {
   const [isExpandMode, setisExpandMode] = useState(false);
 
   return (
-    <>
       <div ref={constraintsRef}>
         {isExpandMode ? (
-          <motion.li whileHover={{ scale: 1.03 }}>
-            <NoteCard isShowMore={isExpandMode}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <motion.li whileHover={{ scale: 1 }}>
+            <NoteCard isShowMore={isExpandMode} style={{backgroundColor: "#fff3ab"}}>
+              <Title>
                 <p>{props.noteObj.title}</p>
                 <p></p>
                 <ShowMoreBTN onClick={() => setisExpandMode(!isExpandMode)}>
                   <MdKeyboardArrowUp />
                 </ShowMoreBTN>
-              </div>
+              </Title>
               <div>{renderMD(props.noteObj.note)}</div>
             </NoteCard>
           </motion.li>
@@ -42,6 +41,5 @@ export default function Note(props) {
           </motion.div>
         )}
       </div>
-    </>
   );
 }
