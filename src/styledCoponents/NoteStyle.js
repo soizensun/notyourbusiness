@@ -31,7 +31,6 @@ export const PreviewCard = Styled.div`
     padding-left: ${props => props.isShow ? "20px" : "0px"};
     margin: 13px;
     background-color: #fff4ac;
-    /* background-color: ${props => props.isShow ? "red" : "green"}; */
     width: 350px;
     word-wrap: break-word;
     border-radius: 6px;
@@ -60,6 +59,7 @@ export const ShowMoreBTN = Styled.button`
     }
 `
 export const Title = Styled.div`
+    word-wrap: break-word;
     display: flex;
     justify-content: space-between;
     background-color: #ffeb82;
@@ -68,11 +68,36 @@ export const Title = Styled.div`
     margin-left: -20px;
     padding-left: 20px;
     padding-right: 20px;
+    font-weight: 600;
     /* color: white; */
+`
+
+export const TitlePreview = Styled.div`
+    word-wrap: break-word;
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffeb82;
+    margin-top: 9px;
+    height: 50px;
+    margin-right: -20px;
+    margin-left: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 600;
 `
 
 export const Box = Styled.div`
     display: flex;
     justify-content: space-between;
 /* color: white; */
+`
+
+export const SaveBtnContainer = Styled.div`
+    word-wrap: break-word;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 9px;
+    margin-right: -28px;
+    padding-left: 20px;
+    padding-right: 13px;
 `
