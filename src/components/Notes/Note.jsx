@@ -9,37 +9,38 @@ export default function Note(props) {
   const [isExpandMode, setisExpandMode] = useState(false);
 
   return (
-      <div ref={constraintsRef}>
-        {isExpandMode ? (
-          <motion.li whileHover={{ scale: 1 }}>
-            <NoteCard isShowMore={isExpandMode} style={{backgroundColor: "#fff3ab"}}>
-              <Title>
-                <p>{props.noteObj.title}</p>
+    <div ref={constraintsRef}>
+      {isExpandMode ? (
+        <motion.li whileHover={{ scale: 1 }}>
+          <NoteCard
+            isShowMore={isExpandMode}
+            style={{ backgroundColor: "#fff3ab" }}
+          >
+            <Title>
+              <p>{props.noteObj.title}</p>
+              <p></p>
+              <ShowMoreBTN onClick={() => setisExpandMode(!isExpandMode)}>
+                <MdKeyboardArrowUp />
+              </ShowMoreBTN>
+            </Title>
+            <div>{renderMD(props.noteObj.note)}</div>
+          </NoteCard>
+        </motion.li>
+      ) : (
+        <motion.div drag dragConstraints={constraintsRef}>
+          <motion.li whileHover={{ scale: 1.03 }}>
+            <NoteCard isShowMore={isExpandMode} onClick={() => {console.log(props.noteObj)}}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <p style={{ fontWeight: "500" }}>{props.noteObj.title}</p>
                 <p></p>
                 <ShowMoreBTN onClick={() => setisExpandMode(!isExpandMode)}>
-                  <MdKeyboardArrowUp />
+                  <MdKeyboardArrowDown style={{ marginTop: "3px" }} />
                 </ShowMoreBTN>
-              </Title>
-              <div>{renderMD(props.noteObj.note)}</div>
+              </div>
             </NoteCard>
           </motion.li>
-        ) : (
-          <motion.div drag dragConstraints={constraintsRef}>
-            <motion.li whileHover={{ scale: 1.03 }}>
-              <NoteCard isShowMore={isExpandMode}>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <p>{props.noteObj.title}</p>
-                  <p></p>
-                  <ShowMoreBTN onClick={() => setisExpandMode(!isExpandMode)}>
-                    <MdKeyboardArrowDown style={{ marginTop: "3px" }} />
-                  </ShowMoreBTN>
-                </div>
-              </NoteCard>
-            </motion.li>
-          </motion.div>
-        )}
-      </div>
+        </motion.div>
+      )}
+    </div>
   );
 }

@@ -6,6 +6,7 @@ export default function App() {
     return (
         <Container>
             <Center>
+                
                 {/* <div>ฟหกดฟหกด</div> */}
                 <NoteSection />
             </Center>

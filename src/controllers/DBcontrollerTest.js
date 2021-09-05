@@ -18,3 +18,12 @@ export const getNotes = () => {
         .get();
     return doc;
 }
+
+export const deleteNote = (docId) => {
+    db.collection("Notes").doc(docId).delete()
+        .then(() => {
+            return true
+        }).catch((error) => {
+            return false
+        });
+}
