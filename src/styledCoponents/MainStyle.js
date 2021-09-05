@@ -13,26 +13,28 @@ export const Container = Styled.div`
 
 export const Button = Styled.button`
     &{
-        margin: 23px 0 0 0;
-        padding: 15px 25px;
-        font-size: 21px;
+        /* margin: 23px 0 0 0; */
+        padding: 10px 20px;
+        font-size: 15px;
         text-align: center;
         outline: none;
-        color: black;
-        background-color: #F4D03F;
+        color: white;
+        background-color: #F1948A;
         border: none;
-        border-radius: 10px;
-        box-shadow: 0 9px #999;
+        border-radius: 7px;
+        box-shadow: 0 5px #999;
         font-family: 'Prompt', sans-serif;
-        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='55' viewport='0 0 100 100' style='fill:black;font-size:25px;'><text y='50%'>🍭</text></svg>"), auto;
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='55' viewport='0 0 100 100' style='fill:black;font-size:25px;'><text y='50%'>☝🏻</text></svg>"), auto;
     }
     &:hover{
-        background-color: #F1C40F
+        background-color: #F1948A;
+        color: white
     }
     &:active{
-        background-color: #F1C40F;
-        box-shadow: 0 5px #666;
+        background-color: #F1948A;
+        box-shadow: 0 3px #666;
         transform: translateY(4px);
+        color: white
     }
    
 `;

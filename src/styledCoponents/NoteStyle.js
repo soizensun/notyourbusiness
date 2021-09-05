@@ -4,7 +4,7 @@ export const NoteCard = Styled.div`
     text-align: left;
     padding: 5px 20px 5px 20px;
     margin: 13px;
-    background-color: #FCF3CF;
+    background-color: #ffeb82;
     width: 350px;
     word-wrap: break-word;
     border-radius: 6px;
@@ -30,7 +30,7 @@ export const PreviewCard = Styled.div`
     padding-right: ${props => props.isShow ? "20px" : "0px"};
     padding-left: ${props => props.isShow ? "20px" : "0px"};
     margin: 13px;
-    background-color: #FCF3CF;
+    background-color: #fff4ac;
     /* background-color: ${props => props.isShow ? "red" : "green"}; */
     width: 350px;
     word-wrap: break-word;
@@ -45,7 +45,7 @@ export const ShowMoreBTN = Styled.button`
     align-items: center;
     justify-content: center;
     border-radius: 100px;
-    cursor:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='55' viewport='0 0 100 100' style='fill:black;font-size:22px;'><text y='50%'>🍆</text></svg>"), auto;
+    cursor:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='55' viewport='0 0 100 100' style='fill:black;font-size:22px;'><text y='50%'>☝🏻</text></svg>"), auto;
     width: 37px;
     height: 37px;
     color: #242424;
@@ -55,7 +55,24 @@ export const ShowMoreBTN = Styled.button`
     margin-top: 9px;
     &:hover {
         color: #242424;
-        background-color: #F8E391;
+        background-color: #ffffff90;
         transition: 0.3s;
     }
+`
+export const Title = Styled.div`
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffeb82;
+    margin-top: 9px;
+    margin-right: -20px;
+    margin-left: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    /* color: white; */
+`
+
+export const Box = Styled.div`
+    display: flex;
+    justify-content: space-between;
+/* color: white; */
 `
