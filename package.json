@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@atlaskit/banner": "^11.4.1",
+    "@atlaskit/inline-dialog": "^13.1.1",
+    "@atlaskit/spinner": "^15.1.1",
     "@atlaskit/textarea": "^4.2.1",
     "@atlaskit/textfield": "^5.1.1",
     "@testing-library/jest-dom": "^5.11.4",
