@@ -21,9 +21,9 @@ export const getNotes = () => {
 
 export const deleteNote = (docId) => {
     db.collection("Notes").doc(docId).delete()
-        .then(() => {
-            return true
+        .then((res) => {
+            console.log("delete suscess");
         }).catch((error) => {
-            return false
+            console.log("delete failed");
         });
 }

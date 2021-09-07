@@ -36,5 +36,13 @@ export const Button = Styled.button`
         transform: translateY(4px);
         color: ${props => props.textColor ? props.textColor : "black"};
     }
-   
+    &:disabled {
+        background-color: #ABB2B9;
+        color: white;
+        cursor: no-drop;
+        border: none;
+        background: #D5D8DC;
+        box-shadow: 0 3px #999999;
+        transform: translateY(4px);
+    }
 `;

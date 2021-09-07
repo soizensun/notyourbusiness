@@ -4,7 +4,7 @@ body {
   /* font-family: 'Prompt', sans-serif; */
   padding: 30px;
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='55' viewport='0 0 100 100' style='fill:black;font-size:30px;'><text y='50%'>🥓</text></svg>"), auto;
-  background-color: #424949;
+  /* background-color: #424949; */
 }
 
 code {
