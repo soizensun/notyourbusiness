@@ -10,7 +10,7 @@ import Textfield from "@atlaskit/textfield";
 import TextArea from '@atlaskit/textarea';
 import { SaveBtnContainer } from '../../styledCoponents/NoteStyle'
 
-function NoteSection() {
+function NoteSection(props) {
   const constraintsRef = useRef(null);
   const timestamp = firebase.firestore.FieldValue.serverTimestamp();
   const [note, setNote] = useState("");
@@ -26,21 +26,24 @@ function NoteSection() {
   }, []);
 
   const get = () => {
-    getNotes().then((querySnapshot) => {
-      const tmpNoteList = [];
-      setIsShowAddNoteForm(querySnapshot.docs.length === 0)
-      setisShowHRSeperate(querySnapshot.docs.length !== 0)
-      querySnapshot.forEach((doc) => {
-        let tmp = {
-          id: doc.id,
-          title: doc.data().title,
-          note: doc.data().note,
-          createAt: doc.data().createAt,
-        };
-        tmpNoteList.push(tmp);
+    props.setIsLoading(true)
+    getNotes()
+      .then((querySnapshot) => {
+        const tmpNoteList = [];
+        setIsShowAddNoteForm(querySnapshot.docs.length === 0)
+        setisShowHRSeperate(querySnapshot.docs.length !== 0)
+        querySnapshot.forEach((doc) => {
+          let tmp = {
+            id: doc.id,
+            title: doc.data().title,
+            note: doc.data().note,
+            createAt: doc.data().createAt,
+          };
+          tmpNoteList.push(tmp);
+        });
+        setNoteList(tmpNoteList.reverse());
+        props.setIsLoading(false)
       });
-      setNoteList(tmpNoteList.reverse());
-    });
   };
 
   const saveData = () => {
@@ -92,6 +95,7 @@ function NoteSection() {
   }
 
   const deleteNoteTriggle = (docId) => {
+    props.setIsLoading(true)
     deleteNote(docId)
     var tmpCurrentNote = noteList.filter(item => { return item.id !== docId })
     setNoteList(tmpCurrentNote)
@@ -99,6 +103,7 @@ function NoteSection() {
       setIsShowAddNoteForm(true)
       setisShowHRSeperate(false)
     }
+    props.setIsLoading(false)
   }
 
   const clearForm = () => {
@@ -108,6 +113,7 @@ function NoteSection() {
 
   return (
     <div >
+      {/* <ProgressBar isIndeterminate /> */}
       <Box>
         <div style={{ marginLeft: "15px", marginTop: "6px", fontSize: "22px", fontWeight: "600" }}>My note</div>
 
@@ -165,8 +171,6 @@ function NoteSection() {
               <Box>
                 <p></p>
                 <SaveBtnContainer>
-
-
                   {
                     isEdit ?
                       <div>

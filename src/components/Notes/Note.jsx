@@ -4,10 +4,8 @@ import { NoteCard, ShowMoreBTN, Title, Box, DeleteNoteBTN, EditBTN } from "../..
 import { Button } from '../../styledCoponents/MainStyle'
 import { motion } from "framer-motion";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-// import { FiEdit3 } from "react-icons/fi";
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import InlineDialog from '@atlaskit/inline-dialog';
-// import { deleteNote } from '../../controllers/DBcontrollerTest'
 
 export default function Note(props) {
   const constraintsRef = useRef(null);
