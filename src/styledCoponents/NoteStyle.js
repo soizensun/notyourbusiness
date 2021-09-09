@@ -59,6 +59,27 @@ export const ShowMoreBTN = Styled.button`
     }
 `
 
+export const EditBTN = Styled.button`
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    cursor:  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='55' viewport='0 0 100 100' style='fill:black;font-size:22px;'><text y='50%'>☝🏻</text></svg>"), auto;
+    width: 37px;
+    height: 37px;
+    color: #242424;
+    border: none;
+    background: none;
+    font-size: 18px;
+    margin-top: 9px;
+    &:hover {
+        color: white;
+        background-color: #F5B041;
+        transition: 0.3s;
+    }
+`
+
 export const DeleteNoteBTN = Styled.button`
     border-radius: 100px;
     display: flex;

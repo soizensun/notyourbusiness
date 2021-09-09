@@ -2,13 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import Note from "./Note";
 import NotePreview from "./NotePreview";
 import { motion } from "framer-motion";
-import { addNote, getNotes } from "../../controllers/DBcontrollerTest";
+import { addNote, getNotes, deleteNote, editNote } from "../../controllers/DBcontrollerTest";
 import { Box } from "../../styledCoponents/NoteStyle";
 import { Button } from "../../styledCoponents/MainStyle";
 import { firebase } from "../../configs/FirebaseConfig";
 import Textfield from "@atlaskit/textfield";
 import TextArea from '@atlaskit/textarea';
-
 import { SaveBtnContainer } from '../../styledCoponents/NoteStyle'
 
 function NoteSection() {
@@ -18,7 +17,9 @@ function NoteSection() {
   const [noteTitle, setNoteTitle] = useState("");
   const [noteList, setNoteList] = useState([]);
   const [isShowAddNoteForm, setIsShowAddNoteForm] = useState(false);
-  const [isShowHRSeperate, setisShowHRSeperate] = useState(true)
+  const [isShowHRSeperate, setisShowHRSeperate] = useState(true);
+  const [isEdit, setIsEdit] = useState(false)
+  const [editNoteId, setEditNoteId] = useState("")
 
   useEffect(() => {
     get();
@@ -43,7 +44,6 @@ function NoteSection() {
   };
 
   const saveData = () => {
-    // setIsShowAddNoteForm(false)
     if (noteTitle !== "" && note !== "") {
       addNote(noteTitle, note)
         .then((docRef) => {
@@ -73,25 +73,43 @@ function NoteSection() {
     setIsShowAddNoteForm(!isShowAddNoteForm)
     setNoteTitle("")
     setNote("")
+    setIsEdit(false)
+  }
+
+  const saveEditData = async () => {
+    editNote(editNoteId, noteTitle, note).then(() => { get() })
+    setIsEdit(false)
+    hiddenForm()
+  }
+
+  const showEditNote = (note) => {
+    setEditNoteId(note.id)
+    setNote(note.note)
+    setNoteTitle(note.title)
+
+    setIsShowAddNoteForm(true)
+    setIsEdit(true)
   }
 
   const deleteNoteTriggle = (docId) => {
+    deleteNote(docId)
     var tmpCurrentNote = noteList.filter(item => { return item.id !== docId })
     setNoteList(tmpCurrentNote)
-    console.log(tmpCurrentNote.length);
     if (tmpCurrentNote.length === 0) {
       setIsShowAddNoteForm(true)
       setisShowHRSeperate(false)
     }
-
-
   }
 
+  const clearForm = () => {
+    setNoteTitle("")
+    setNote("")
+  }
 
   return (
     <div >
       <Box>
-        <div style={{marginLeft: "25px", marginTop: "6px", fontSize: "22px", fontWeight: "600"}}>My note</div>
+        <div style={{ marginLeft: "15px", marginTop: "6px", fontSize: "22px", fontWeight: "600" }}>My note</div>
 
         <div ref={constraintsRef}>
           <motion.div drag dragConstraints={constraintsRef}>
@@ -135,7 +153,7 @@ function NoteSection() {
             </div>
             <div>
               <TextArea
-                style={{ height: "100px", marginTop: "5px" }}
+                style={(isEdit) ? { height: "200px", marginTop: "5px" } : { height: "100px", marginTop: "5px" }}
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 resize="vertical"
@@ -147,25 +165,56 @@ function NoteSection() {
               <Box>
                 <p></p>
                 <SaveBtnContainer>
-                  <Button
-                    onClick={() => { setNoteTitle(""); setNote("") }}
-                    style={{ marginBottom: "10px", marginRight: "13px" }}
-                    bgColor="#EBDEF0 "
-                    hoverColor="#EBDEF0 "
-                    textColor="black"
-                  >
-                    clear form
-                </Button>
-                  <Button
-                    disabled={noteTitle === "" || note === ""}
-                    onClick={() => saveData()}
-                    style={{ marginBottom: "10px", marginRight: "13px" }}
-                    bgColor="#76D7C4 "
-                    hoverColor="#76D7C4 "
-                    textColor="white"
-                  >
-                    save
-                </Button>
+
+
+                  {
+                    isEdit ?
+                      <div>
+                        <Button
+                          onClick={() => hiddenForm()}
+                          style={{ marginBottom: "10px", marginRight: "13px" }}
+                          bgColor="#EC7063 "
+                          hoverColor="#EC7063 "
+                          textColor="white"
+                        >
+                          cancel
+                        </Button>
+                        <Button
+                          disabled={noteTitle === "" || note === ""}
+                          onClick={() => saveEditData()}
+                          style={{ marginBottom: "10px", marginRight: "13px" }}
+                          bgColor="#F5B041 "
+                          hoverColor="#F5B041 "
+                          textColor="white"
+                        >
+                          save edit
+                        </Button>
+                      </div>
+                      :
+                      <div>
+                        <Button
+                          onClick={() => clearForm()}
+                          style={{ marginBottom: "10px", marginRight: "13px" }}
+                          bgColor="#EBDEF0 "
+                          hoverColor="#EBDEF0 "
+                          textColor="black"
+                        >
+                          clear form
+                        </Button>
+                        <Button
+                          disabled={noteTitle === "" || note === ""}
+                          onClick={() => saveData()}
+                          style={{ marginBottom: "10px", marginRight: "13px" }}
+                          bgColor="#76D7C4 "
+                          hoverColor="#76D7C4 "
+                          textColor="white"
+                        >
+                          save
+                        </Button>
+                      </div>
+
+                  }
+
                 </SaveBtnContainer>
               </Box>
             }
@@ -177,8 +226,8 @@ function NoteSection() {
       </div>
 
       {
-        noteList.map((noteObj) => (
-          <Note noteObj={noteObj} deleteNoteTriggle={deleteNoteTriggle} />
+        noteList.map((noteObj, index) => (
+          <Note key={index} noteObj={noteObj} deleteNoteTriggle={deleteNoteTriggle} showEditNote={showEditNote} />
         ))
       }
     </div>
