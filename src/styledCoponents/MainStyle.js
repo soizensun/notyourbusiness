@@ -8,6 +8,8 @@ export const Center = Styled.div`
 export const Container = Styled.div`
     display: flex;
     align-items: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
     /* height: 320px; */
 `
 

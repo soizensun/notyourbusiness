@@ -3,11 +3,14 @@ import { db, firebase } from '../configs/FirebaseConfig'
 const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 export const addNote = (title = "my note", note) => {
+    // TODO : add note in firestore spacific by user
+    // if(localStorage.getItem("currentUserToken")) {}
     const docID = db.collection("Notes")
         .add({
             title,
             note,
-            createAt: timestamp
+            createAt: timestamp,
+            owner: localStorage.getItem("currentUserToken") || "owner mock"
         })
     return docID
 }
