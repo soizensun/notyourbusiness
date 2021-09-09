@@ -23,7 +23,7 @@ function NoteSection(props) {
 
   useEffect(() => {
     get();
-  }, []);
+  });
 
   const get = () => {
     props.setIsLoading(true)
