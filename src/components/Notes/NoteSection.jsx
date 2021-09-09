@@ -26,7 +26,7 @@ function NoteSection(props) {
   });
 
   const get = () => {
-    props.setIsLoading(true)
+    // props.setIsLoading(true)
     getNotes()
       .then((querySnapshot) => {
         const tmpNoteList = [];
@@ -42,7 +42,7 @@ function NoteSection(props) {
           tmpNoteList.push(tmp);
         });
         setNoteList(tmpNoteList.reverse());
-        props.setIsLoading(false)
+        // props.setIsLoading(false)
       });
   };
 
@@ -95,7 +95,7 @@ function NoteSection(props) {
   }
 
   const deleteNoteTriggle = (docId) => {
-    props.setIsLoading(true)
+    // props.setIsLoading(true)
     deleteNote(docId)
     var tmpCurrentNote = noteList.filter(item => { return item.id !== docId })
     setNoteList(tmpCurrentNote)
@@ -103,7 +103,7 @@ function NoteSection(props) {
       setIsShowAddNoteForm(true)
       setisShowHRSeperate(false)
     }
-    props.setIsLoading(false)
+    // props.setIsLoading(false)
   }
 
   const clearForm = () => {

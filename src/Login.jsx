@@ -13,13 +13,13 @@ export default function Login(props) {
     const [confirmPasswordRegister, setConfirmPasswordRegister] = useState("")
 
     const register = () => {
-        props.setIsLoading(true)
+        // props.setIsLoading(true)
         if (passwordRegister === confirmPasswordRegister) {
             firebaseRegister(usernameRegister, confirmPasswordRegister)
                 .then((userCredential) => {
                     var user = userCredential.user;
                     props.onLogin(user.uid)
-                    props.setIsLoading(false)
+                    // props.setIsLoading(false)
                 })
                 .catch((error) => {
                     var errorMessage = error.message;
@@ -34,12 +34,12 @@ export default function Login(props) {
     }
 
     const login = () => {
-        props.setIsLoading(true)
+        // props.setIsLoading(true)
         firebaseLogin(usenameLogin, passwordLogin)
             .then((userCredential) => {
                 var user = userCredential.user;
                 props.onLogin(user.uid)
-                props.setIsLoading(false)
+                // props.setIsLoading(false)
             })
             .catch((error) => {
                 var errorMessage = error.message;
