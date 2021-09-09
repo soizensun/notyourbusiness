@@ -27,3 +27,21 @@ export const deleteNote = (docId) => {
             console.log("delete failed");
         });
 }
+
+export const editNote = (docId, title, note) => {
+    var sfDocRef = db.collection("Notes").doc(docId);
+    return db.runTransaction((transaction) => {
+        return transaction.get(sfDocRef).then((sfDoc) => {
+            if (!sfDoc.exists) {
+                throw  new Error("Document does not exist!");
+            }
+            var newTitle = title
+            var newNote = note
+            transaction.update(sfDocRef, { title: newTitle, note: newNote });
+        });
+    }).then(() => {
+        console.log("Transaction successfully committed!");
+    }).catch((error) => {
+        console.log("Transaction failed: ", error);
+    });
+} 
