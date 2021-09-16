@@ -26,10 +26,11 @@ function NoteSection(props) {
 
   useEffect(() => {
     get();
+    // return 
   }, []);
 
   const get = () => {
-    // props.setIsLoading(true)
+    props.setIsLoading(true)
     getNotes()
       .then((querySnapshot) => {
         const tmpNoteList = [];
@@ -45,7 +46,7 @@ function NoteSection(props) {
           tmpNoteList.push(tmp);
         });
         setNoteList(tmpNoteList.reverse());
-        // props.setIsLoading(false)
+        props.setIsLoading(false)
       });
   };
 
