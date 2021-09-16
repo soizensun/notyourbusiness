@@ -8,7 +8,9 @@ import { Button } from "../../styledCoponents/MainStyle";
 import { firebase } from "../../configs/FirebaseConfig";
 import Textfield from "@atlaskit/textfield";
 import TextArea from '@atlaskit/textarea';
+import Spinner from '@atlaskit/spinner';
 import { SaveBtnContainer } from '../../styledCoponents/NoteStyle'
+
 
 function NoteSection(props) {
   const constraintsRef = useRef(null);
@@ -20,13 +22,14 @@ function NoteSection(props) {
   const [isShowHRSeperate, setisShowHRSeperate] = useState(true);
   const [isEdit, setIsEdit] = useState(false)
   const [editNoteId, setEditNoteId] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     get();
-  });
+  }, []);
 
   const get = () => {
-    // props.setIsLoading(true)
+    setIsLoading(true)
     getNotes()
       .then((querySnapshot) => {
         const tmpNoteList = [];
@@ -42,7 +45,7 @@ function NoteSection(props) {
           tmpNoteList.push(tmp);
         });
         setNoteList(tmpNoteList.reverse());
-        // props.setIsLoading(false)
+        setIsLoading(false)
       });
   };
 
@@ -95,7 +98,7 @@ function NoteSection(props) {
   }
 
   const deleteNoteTriggle = (docId) => {
-    // props.setIsLoading(true)
+    setIsLoading(true)
     deleteNote(docId)
     var tmpCurrentNote = noteList.filter(item => { return item.id !== docId })
     setNoteList(tmpCurrentNote)
@@ -103,7 +106,7 @@ function NoteSection(props) {
       setIsShowAddNoteForm(true)
       setisShowHRSeperate(false)
     }
-    // props.setIsLoading(false)
+    setIsLoading(false)
   }
 
   const clearForm = () => {
@@ -113,9 +116,11 @@ function NoteSection(props) {
 
   return (
     <div >
-      {/* <ProgressBar isIndeterminate /> */}
       <Box>
-        <div style={{ marginLeft: "15px", marginTop: "6px", fontSize: "22px", fontWeight: "600" }}>My note</div>
+        <div style={{ marginLeft: "15px", marginTop: "6px", fontSize: "22px", fontWeight: "600" }}>
+          <span>My note</span>
+          { isLoading && <span style={{ paddingLeft: "20px" }}><Spinner /></span> }
+        </div>
 
         <div ref={constraintsRef}>
           <motion.div drag dragConstraints={constraintsRef}>
@@ -222,9 +227,7 @@ function NoteSection(props) {
                 </SaveBtnContainer>
               </Box>
             }
-            {
-              isShowHRSeperate && <hr />
-            }
+            { isShowHRSeperate && <hr /> }
           </div>
         }
       </div>
