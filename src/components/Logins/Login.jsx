@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Textfield from "@atlaskit/textfield";
-import { FullScreenBox } from './styledCoponents/LoginStyle'
-import { Container, Center } from './styledCoponents/MainStyle'
-import { firebaseRegister, firebaseLogin } from './controllers/Authencontroller'
+import { FullScreenBox } from '../../styledCoponents/LoginStyle'
+import { Container, Center } from '../../styledCoponents/MainStyle'
+import { firebaseRegister, firebaseLogin } from '../../controllers/Authencontroller'
+import { Button } from '../../styledCoponents/MainStyle'
 
 export default function Login(props) {
     const [usenameLogin, setUsenameLogin] = useState("test@gmail.com")
@@ -46,6 +47,7 @@ export default function Login(props) {
                 console.log(errorMessage);
                 console.log(error.code);
                 // TODO : handle "auth/user-not-found"  when user not found
+                // auth/wrong-password
             });
     }
 
@@ -55,9 +57,9 @@ export default function Login(props) {
                 <Container>
                     <Center>
                         <p>
-                            <div>
+                            <div style={{ paddingBottom: "5px" }}>
                                 <Textfield
-                                    // style={{ fontWeight: "600" }}
+                                    style={{ height: "50px" }}
                                     value={usenameLogin}
                                     onChange={(e) => setUsenameLogin(e.target.value)}
                                     type="text"
@@ -65,14 +67,20 @@ export default function Login(props) {
                             </div>
                             <div>
                                 <Textfield
-                                    // style={{ fontWeight: "600" }}
+                                    style={{ height: "50px" }}
                                     value={passwordLogin}
                                     onChange={(e) => setPasswordLogin(e.target.value)}
                                     type="password"
                                     placeholder="password" />
                             </div>
                             <div>
-                                <button onClick={() => login()}>login</button>
+                                <Button
+                                    style={{width: "300px", height: "50px", marginTop: "10px", fontSize:"21px" }}
+                                    textColor="white"
+                                    onClick={() => login()}
+                                >
+                                    <span>login</span>
+                                </Button>
                             </div>
                         </p>
 

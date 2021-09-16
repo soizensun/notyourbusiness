@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import NoteSection from './components/Notes/NoteSection'
-import { Center, Container } from './styledCoponents/MainStyle'
-import Login from './Login'
+import { Center, Container, FloatingBtn } from './styledCoponents/MainStyle'
+import Login from './components/Logins/Login'
+import { IoMdLogOut } from 'react-icons/io'
+import InlineDialog from '@atlaskit/inline-dialog';
 // import ProgressBar from '@atlaskit/progress-bar';
 
 export default function App() {
@@ -13,6 +15,11 @@ export default function App() {
         setIsLogin(localStorage.getItem("currentUserToken"))
     }
 
+    const onLogout = () => {
+        localStorage.removeItem('currentUserToken')
+        window.location.reload()
+    }
+
     return (
         <div>
             <Container>
@@ -20,11 +27,22 @@ export default function App() {
                     {
                         isLogin ?
                             <NoteSection /> :
-                            <Login onLogin={onLogin}/>
+                            <Login onLogin={onLogin} />
                     }
                 </Center>
+                {isLogin &&
+                    <FloatingBtn
+                    onClick={() => onLogout()}
+                        textColor="white"
+                        bgColor="#F1948A"
+                    >
+                        <IoMdLogOut />
+                    </FloatingBtn>
+                }
             </Container>
         </div>
 
     )
 }
+
+
