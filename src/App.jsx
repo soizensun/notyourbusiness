@@ -3,8 +3,6 @@ import NoteSection from './components/Notes/NoteSection'
 import { Center, Container, FloatingBtn } from './styledCoponents/MainStyle'
 import Login from './components/Logins/Login'
 import { IoMdLogOut } from 'react-icons/io'
-import InlineDialog from '@atlaskit/inline-dialog';
-// import ProgressBar from '@atlaskit/progress-bar';
 
 export default function App() {
     const [isLogin, setIsLogin] = useState(localStorage.getItem("currentUserToken"))
