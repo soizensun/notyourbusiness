@@ -29,7 +29,7 @@ function NoteSection(props) {
   }, []);
 
   const get = () => {
-    setIsLoading(true)
+    // props.setIsLoading(true)
     getNotes()
       .then((querySnapshot) => {
         const tmpNoteList = [];
@@ -45,7 +45,7 @@ function NoteSection(props) {
           tmpNoteList.push(tmp);
         });
         setNoteList(tmpNoteList.reverse());
-        setIsLoading(false)
+        // props.setIsLoading(false)
       });
   };
 
