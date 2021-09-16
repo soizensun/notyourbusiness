@@ -3,7 +3,7 @@ import { db, firebase } from '../configs/FirebaseConfig'
 const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 export const addNote = (title = "my note", note) => {
-    // TODO : add note in firestore spacific by user
+    // TODO : check user from localstorage in undefined
     // if(localStorage.getItem("currentUserToken")) {}
     const docID = db.collection("Notes")
         .add({
@@ -16,8 +16,12 @@ export const addNote = (title = "my note", note) => {
 }
 
 export const getNotes = () => {
+    console.log();
+    const currentUser = localStorage.getItem("currentUserToken")
     const doc = db.collection("Notes")
-        .orderBy('createAt')
+        .where("owner", "==", currentUser)
+        // .orderBy('createAt')
+
         .get();
     return doc;
 }
@@ -36,7 +40,7 @@ export const editNote = (docId, title, note) => {
     return db.runTransaction((transaction) => {
         return transaction.get(sfDocRef).then((sfDoc) => {
             if (!sfDoc.exists) {
-                throw  new Error("Document does not exist!");
+                throw new Error("Document does not exist!");
             }
             var newTitle = title
             var newNote = note
