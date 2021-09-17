@@ -6,3 +6,8 @@ export const FullScreenBox = Styled.div`
     scroll-snap-align: center;
     background-color: green; */
 `
+
+export const SubTitle = Styled.a`
+    font-size: 18px;
+    /* text-decoration: underline; */
+`

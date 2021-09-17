@@ -1,20 +1,25 @@
 import React, { useState } from 'react'
 import Textfield from "@atlaskit/textfield";
 import { FullScreenBox } from '../../styledCoponents/LoginStyle'
-import { Container, Center } from '../../styledCoponents/MainStyle'
+import { Container, Center, ContainerFlex } from '../../styledCoponents/MainStyle'
 import { firebaseRegister, firebaseLogin } from '../../controllers/Authencontroller'
-import { Button } from '../../styledCoponents/MainStyle'
+import { Button, ErrorMsgBox } from '../../styledCoponents/MainStyle'
+import '../../styledCoponents/Login.css'
 
 export default function Login(props) {
-    const [usenameLogin, setUsenameLogin] = useState("test@gmail.com")
-    const [passwordLogin, setPasswordLogin] = useState("123456")
+    const [usernameLogin, setUsernameLogin] = useState("")
+    const [passwordLogin, setPasswordLogin] = useState("")
 
     const [usernameRegister, setUsernameRegister] = useState("")
     const [passwordRegister, setPasswordRegister] = useState("")
     const [confirmPasswordRegister, setConfirmPasswordRegister] = useState("")
 
-    const register = () => {
-        // props.setIsLoading(true)
+    const [onShowRegisterSection, setOnShowRegisterSection] = useState(false)
+    const [isVisitMe, setIsVisitMe] = useState(false)
+
+    const [errorMsg, setErrorMsg] = useState("")
+
+    const onRegister = () => {
         if (passwordRegister === confirmPasswordRegister) {
             firebaseRegister(usernameRegister, confirmPasswordRegister)
                 .then((userCredential) => {
@@ -23,32 +28,66 @@ export default function Login(props) {
                     // props.setIsLoading(false)
                 })
                 .catch((error) => {
-                    var errorMessage = error.message;
-                    console.log(errorMessage);
-                    console.log(error.code);
-                    // TODO : handle "auth/email-already-in-use" code when user exiting
+                    if (error.code) setErrorMsg(error.message)
+                    setTimeout(() => {
+                        setErrorMsg("")
+                    }, 5000);
                 });
         }
         else {
-            // TODO :  
+            setErrorMsg("check your confirm password")
+            setTimeout(() => {
+                setErrorMsg("")
+            }, 5000);
         }
     }
 
-    const login = () => {
-        // props.setIsLoading(true)
-        firebaseLogin(usenameLogin, passwordLogin)
+    const onLogin = () => {
+        firebaseLogin(usernameLogin, passwordLogin)
             .then((userCredential) => {
                 var user = userCredential.user;
                 props.onLogin(user.uid)
                 // props.setIsLoading(false)
             })
             .catch((error) => {
-                var errorMessage = error.message;
-                console.log(errorMessage);
-                console.log(error.code);
-                // TODO : handle "auth/user-not-found"  when user not found
-                // auth/wrong-password
+                if (error.code) setErrorMsg(error.message)
+                setTimeout(() => {
+                    setErrorMsg("")
+                }, 4000);
             });
+    }
+
+    const onVisitMe = () => {
+        if (isVisitMe) {
+            setUsernameLogin("")
+            setPasswordLogin("")
+        }
+        else {
+            setUsernameLogin("visitme@notyourbus.com")
+            setPasswordLogin("visitme")
+        }
+        setIsVisitMe(!isVisitMe)
+    }
+
+    const onSwitchLoginAndRegisterMode = (mode) => {
+        switch (mode) {
+            case "showLogin":
+                setUsernameRegister("")
+                setPasswordRegister("")
+                setConfirmPasswordRegister("")
+
+                setOnShowRegisterSection(false)
+                break;
+            case "showRegister":   
+                setUsernameLogin("")
+                setPasswordLogin("")
+
+                setOnShowRegisterSection(true)
+                break;
+            default: 
+                break;
+        }
+
     }
 
     return (
@@ -56,64 +95,129 @@ export default function Login(props) {
             <FullScreenBox>
                 <Container>
                     <Center>
-                        <p>
-                            <div style={{ paddingBottom: "5px" }}>
-                                <Textfield
-                                    style={{ height: "50px" }}
-                                    value={usenameLogin}
-                                    onChange={(e) => setUsenameLogin(e.target.value)}
-                                    type="text"
-                                    placeholder="email" />
+
+                        {/* LOGO */}
+                        <div id="container">
+                            <div style={{ marginBottom: "8px" }}>
+                                NOT
                             </div>
-                            <div>
-                                <Textfield
-                                    style={{ height: "50px" }}
-                                    value={passwordLogin}
-                                    onChange={(e) => setPasswordLogin(e.target.value)}
-                                    type="password"
-                                    placeholder="password" />
+                            <div style={{ marginBottom: "8px" }}>
+                                YOUR
                             </div>
-                            <div>
+                            <div id="flip">
+                                <div><div>business</div></div>
+                                <div><div>work</div></div>
+                                <div><div>everything</div></div>
+                            </div>
+                        </div>
+
+                        {/* message */}
+                        {errorMsg && <ErrorMsgBox>{errorMsg}</ErrorMsgBox>}
+
+                        {/* LOGIN */}
+                        {
+                            !onShowRegisterSection &&
+                            <p>
+                                <div style={{ paddingBottom: "5px" }}>
+                                    <Textfield
+                                        style={{ height: "50px" }}
+                                        value={usernameLogin}
+                                        onChange={(e) => setUsernameLogin(e.target.value)}
+                                        type="text"
+                                        placeholder="email" />
+                                </div>
+                                <div>
+                                    <Textfield
+                                        style={{ height: "50px" }}
+                                        value={passwordLogin}
+                                        onChange={(e) => setPasswordLogin(e.target.value)}
+                                        type="password"
+                                        placeholder="password" />
+                                </div>
                                 <Button
-                                    style={{width: "300px", height: "50px", marginTop: "10px", fontSize:"21px" }}
+                                    style={{ width: "300px", height: "60px", marginTop: "10px", fontSize: "21px" }}
                                     textColor="white"
-                                    onClick={() => login()}
+                                    onClick={() => onLogin()}
+                                    disabled={usernameLogin === "" || passwordLogin === ""}
                                 >
-                                    <span>login</span>
+                                    <span>Login</span>
                                 </Button>
-                            </div>
-                        </p>
 
+                                <ContainerFlex style={{ paddingTop: "13px" }}>
+                                    <Button
+                                        style={{ fontSize: "14px" }}
+                                        textColor="white"
+                                        bgColor="#C39BD3"
+                                        hoverColor="#C39BD3"
+                                        onClick={() => onVisitMe()}
+                                    >
+                                        <span>{isVisitMe ? "Clear form" : "Visit me"}</span>
+                                    </Button>
+                                    <div></div>
+                                    <Button
+                                        style={{ fontSize: "14px" }}
+                                        textColor="white"
+                                        bgColor="#76D7C4"
+                                        hoverColor="#76D7C4"
+                                        onClick={() => onSwitchLoginAndRegisterMode("showRegister")}
+                                    >
+                                        <span>Register</span>
+                                    </Button>
+                                </ContainerFlex>
+                            </p>
+                        }
 
-                        <p>
-                            <div>
-                                <Textfield
-                                    // style={{ fontWeight: "600" }}
-                                    value={usernameRegister}
-                                    onChange={(e) => setUsernameRegister(e.target.value)}
-                                    type="text"
-                                    placeholder="email" />
-                            </div>
-                            <div>
-                                <Textfield
-                                    // style={{ fontWeight: "600" }}
-                                    value={passwordRegister}
-                                    onChange={(e) => setPasswordRegister(e.target.value)}
-                                    type="password"
-                                    placeholder="password" />
-                            </div>
-                            <div>
-                                <Textfield
-                                    // style={{ fontWeight: "600" }}
-                                    value={confirmPasswordRegister}
-                                    onChange={(e) => setConfirmPasswordRegister(e.target.value)}
-                                    type="password"
-                                    placeholder="confirm password" />
-                            </div>
-                            <div>
-                                <button onClick={() => register()}>register</button>
-                            </div>
-                        </p>
+                        {/* REGISTER */}
+                        {
+                            onShowRegisterSection &&
+                            <p>
+                                <div style={{ paddingBottom: "5px" }}>
+                                    <Textfield
+                                        style={{ height: "50px" }}
+                                        value={usernameRegister}
+                                        onChange={(e) => setUsernameRegister(e.target.value)}
+                                        type="text"
+                                        placeholder="email" />
+                                </div>
+                                <div style={{ paddingBottom: "5px" }}>
+                                    <Textfield
+                                        style={{ height: "50px" }}
+                                        value={passwordRegister}
+                                        onChange={(e) => setPasswordRegister(e.target.value)}
+                                        type="password"
+                                        placeholder="password" />
+                                </div>
+                                <div style={{ paddingBottom: "5px" }}>
+                                    <Textfield
+                                        style={{ height: "50px" }}
+                                        value={confirmPasswordRegister}
+                                        onChange={(e) => setConfirmPasswordRegister(e.target.value)}
+                                        type="password"
+                                        placeholder="confirm password" />
+                                </div>
+                                <Button
+                                    style={{ width: "300px", height: "60px", marginTop: "10px", fontSize: "21px" }}
+                                    textColor="white"
+                                    bgColor="#76D7C4"
+                                    hoverColor="#76D7C4"
+                                    onClick={() => onRegister()}
+                                    disabled={usernameRegister === "" || passwordRegister === "" || confirmPasswordRegister === ""}
+                                >
+                                    <span>Register</span>
+                                </Button>
+
+                                <ContainerFlex style={{ paddingTop: "13px" }}>
+                                    <div></div>
+                                    <Button
+                                        textColor="white"
+                                        style={{ fontSize: "14px" }}
+                                        onClick={() => onSwitchLoginAndRegisterMode("showLogin")}
+                                    >
+                                        <span>Login</span>
+                                    </Button>
+                                </ContainerFlex>
+                            </p>
+                        }
 
                     </Center>
                 </Container>
