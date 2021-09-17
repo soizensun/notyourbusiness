@@ -13,6 +13,11 @@ export const Container = Styled.div`
     /* height: 320px; */
 `
 
+export const ContainerFlex = Styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
 export const Button = Styled.button`
     &{
         /* margin: 23px 0 0 0; */
@@ -47,7 +52,7 @@ export const Button = Styled.button`
         box-shadow: 0 3px #999999;
         transform: translateY(4px);
     }
-`;
+`
 
 export const FloatingBtn = Styled.button`
     &{
@@ -88,4 +93,13 @@ export const FloatingBtn = Styled.button`
         box-shadow: 0 3px #999999;
         transform: translateY(4px);
     }
-`;
+`
+
+export const ErrorMsgBox = Styled.div`
+    background-color: #FADBD8;
+    width: 280px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    color: #566573;
+`

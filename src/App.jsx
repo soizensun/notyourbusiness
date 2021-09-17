@@ -6,7 +6,6 @@ import { IoMdLogOut } from 'react-icons/io'
 
 export default function App() {
     const [isLogin, setIsLogin] = useState(localStorage.getItem("currentUserToken"))
-    // const [isLoading, setIsLoading] = useState(false)
 
     const onLogin = (userToken) => {
         localStorage.setItem("currentUserToken", userToken)
