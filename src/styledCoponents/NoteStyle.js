@@ -144,3 +144,12 @@ export const SaveBtnContainer = Styled.div`
     padding-left: 20px;
     padding-right: 13px;
 `
+
+export const FormName = Styled.div`
+    color: #566573;
+    text-align: left;
+    margin-left: 17px;
+    margin-bottom: -3px;
+    margin-top: 30px;  
+    font-weight: 550
+`

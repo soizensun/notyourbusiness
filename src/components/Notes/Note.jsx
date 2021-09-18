@@ -66,7 +66,7 @@ export default function Note(props) {
             style={{ backgroundColor: "#fff3ab" }}
           >
             <Title>
-              <p>{props.noteObj.title}</p>
+              <p style={{ fontWeight: "600" }}>{props.noteObj.title}</p>
               <Box>
                 <EditBTN onClick={() => editNote(props.noteObj)}>
                   <AiOutlineEdit />
@@ -85,7 +85,7 @@ export default function Note(props) {
             <motion.li whileHover={{ scale: 1.03 }}>
               <NoteCard isShowMore={isExpandMode}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <p style={{ fontWeight: "500" }}>{props.noteObj.title}</p>
+                  <p style={{ fontWeight: "600" }}>{props.noteObj.title}</p>
                   <p></p>
                   <Box>
                     {deleteNoteDialog(props.noteObj.id)}
