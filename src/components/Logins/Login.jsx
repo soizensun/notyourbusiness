@@ -5,6 +5,7 @@ import { Container, Center, ContainerFlex } from '../../styledCoponents/MainStyl
 import { firebaseRegister, firebaseLogin } from '../../controllers/Authencontroller'
 import { Button, ErrorMsgBox } from '../../styledCoponents/MainStyle'
 import '../../styledCoponents/Login.css'
+import { MdKeyboardBackspace } from "react-icons/md"
 import packageJson from '../../../package.json';
 
 export default function Login(props) {
@@ -207,21 +208,22 @@ export default function Login(props) {
                                 </Button>
 
                                 <ContainerFlex style={{ paddingTop: "13px" }}>
-                                    <div></div>
                                     <Button
                                         textColor="white"
                                         style={{ fontSize: "14px" }}
                                         onClick={() => onSwitchLoginAndRegisterMode("showLogin")}
                                     >
-                                        <span>Login</span>
+                                        <span>Back</span>
                                     </Button>
+                                    <div></div>
+
                                 </ContainerFlex>
                             </p>
                         }
                     </Center>
-                    
+
                 </Container>
-                <span style={{fontSize: "12px", color: "#ABB2B9"}}>v.{packageJson.version}</span>
+                <span style={{ fontSize: "12px", color: "#ABB2B9" }}>v.{packageJson.version}</span>
 
             </FullScreenBox>
         </div>
