@@ -5,7 +5,6 @@ import { Container, Center, ContainerFlex } from '../../styledCoponents/MainStyl
 import { firebaseRegister, firebaseLogin } from '../../controllers/Authencontroller'
 import { Button, ErrorMsgBox } from '../../styledCoponents/MainStyle'
 import '../../styledCoponents/Login.css'
-import { MdKeyboardBackspace } from "react-icons/md"
 import packageJson from '../../../package.json';
 
 export default function Login(props) {
